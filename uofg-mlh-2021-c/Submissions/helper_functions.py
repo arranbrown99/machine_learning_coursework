@@ -24,10 +24,10 @@ def evaluate(predicted_y_values, actual_y_values):
     return (accuracy, sensitivity, con_matrix)
 
 
-def plot_roc(actual_y_values,predicted_validation_y_probs):
+def plot_roc(actual_y_values,predicted_validation_y_probs,title):
     # good when each class has roughly equal number of entries
     roc_auc_score_value = roc_auc_score(actual_y_values, predicted_validation_y_probs)
-    print("ROC AUC Score= " + str(roc_auc_score_value))
+    print("ROC AUC Score = " + str(roc_auc_score_value))
     
     false_positive_rate, true_positive_rate, thresholds = roc_curve(actual_y_values, predicted_validation_y_probs,pos_label = 1)
     
@@ -35,9 +35,11 @@ def plot_roc(actual_y_values,predicted_validation_y_probs):
     plt.plot(true_positive_rate,false_positive_rate)
     plt.xlabel('True Positive Rate')
     plt.ylabel('False Positive Rate')
+    plt.title("ROC Curve " + title)
+    plt.savefig( title + "/roc_curve" + ".png")
     
 
-def plot_precision_recall(actual_y_values,predicted_validation_y_probs):
+def plot_precision_recall(actual_y_values,predicted_validation_y_probs,title):
     #deals with class imbalance
     precision, recall,thresholds = precision_recall_curve(actual_y_values,predicted_validation_y_probs,pos_label = 1)
  
@@ -45,9 +47,11 @@ def plot_precision_recall(actual_y_values,predicted_validation_y_probs):
     
     plt.xlabel('Recall')
     plt.ylabel('Precision')
+    plt.title("Precision Recall Curve " + title)
+    plt.savefig( title + "/precision_recall_curve" + ".png")
     
     
-def plot_confusion_matrix(con_matrix,labels,text_x=-0.2,text_y=-1):
+def plot_confusion_matrix(con_matrix,labels,title,text_x=-0.2,text_y=-1):
     print("Confusion Matrix of Classes")
     print(con_matrix)
     print("---")
@@ -55,7 +59,7 @@ def plot_confusion_matrix(con_matrix,labels,text_x=-0.2,text_y=-1):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     cax = ax.matshow(con_matrix)
-    plt.text(text_x,text_y, 'Confusion matrix of the classifier')
+    plt.text(text_x,text_y, 'Confusion Matrix of the ' + title + ' Classifier')
     
     fig.colorbar(cax)
     ax.set_xticklabels([''] + labels)
@@ -63,8 +67,10 @@ def plot_confusion_matrix(con_matrix,labels,text_x=-0.2,text_y=-1):
 
     ax.xaxis.set_major_locator(MultipleLocator(1))
     ax.yaxis.set_major_locator(MultipleLocator(1))
-    plt.xlabel('Predicted Labels')
-    plt.ylabel('Test Labels')
+
     plt.xticks(rotation=90)
+    
     plt.show()
+    plt.savefig( title + "/confusion_matrix" + ".png")
+    
     
