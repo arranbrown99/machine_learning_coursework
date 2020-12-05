@@ -28,8 +28,7 @@ def plot_roc(actual_y_values,predicted_validation_y_probs):
     plt.ylabel('True Positive Rate')
 
 
-def plot_confusion_matrix(con_matrix,labels,text_x,text_y):
-    
+def plot_confusion_matrix(con_matrix,labels,text_x=-0.2,text_y=-1):
     print("Confusion Matrix of Classes")
     print(con_matrix)
     print("---")
